@@ -36,7 +36,7 @@ const getDataFromReq=(req)=>{
 }
 
 //Database Connection----
-mongoose.connect(process.env.MONGO_URL)
+mongoose.connect(process.env.MONGO_URI)
 .then((result)=>{
     console.log("Database connected");
 }).catch((err)=>{
