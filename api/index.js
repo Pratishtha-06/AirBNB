@@ -22,7 +22,7 @@ app.use(cors({
     origin:'http://localhost:5173',
 }));
 
-const jwtSecret ="hejdakljdiaodeuofiehkalj";
+const jwtSecret =process.env.JWT_SECRET;
 
 const getDataFromReq=(req)=>{
   return new Promise((resolve,reject)=>{
@@ -36,7 +36,7 @@ const getDataFromReq=(req)=>{
 //Database Connection----
 mongoose.connect(process.env.MONGO_URL)
 .then((result)=>{
-    console.log("Database connected");
+    console.log("Database connected" + result);
 }).catch((err)=>{
  console.log("error :",err);
 })
