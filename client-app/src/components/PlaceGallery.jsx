@@ -15,7 +15,7 @@ function Gallery({place}){
             <div className="row mb-3">
                 <div className="col-md-8">
                     {place.photo?.[0] && 
-                        <img src={`http://localhost:4000/uploads/${place.photo[0]}`} 
+                        <img src={`https://airbnb-adeu.onrender.com/uploads/${place.photo[0]}`} 
                              onClick={()=>setShow(true)} 
                              className="w-100 p-1 h-100" 
                              style={{borderRadius:'25px 0px 0px 25px',cursor:'pointer'}}></img>
@@ -23,13 +23,13 @@ function Gallery({place}){
                 </div>
                 <div className="col-md-4 d-grid gap-0 row-gap-0 ">
                     {place.photo?.[1] && 
-                        <img src={`http://localhost:4000/uploads/${place.photo[1]}`} 
+                        <img src={`https://airbnb-adeu.onrender.com/${place.photo[1]}`} 
                              onClick={()=>setShow(true)} 
                              className="w-100 h-100 p-1" 
                              style={{borderRadius:'0px 25px 25px 0px',cursor:'pointer'}} ></img>
                     }
                     {place.photo?.[2] && 
-                        <img src={`http://localhost:4000/uploads/${place.photo[2]}`} 
+                        <img src={`https://airbnb-adeu.onrender.com/${place.photo[2]}`} 
                              onClick={()=>setShow(true)} 
                              className="w-100 p-1  h-100" 
                              style={{borderRadius:'0px 25px 25px 0px',cursor:'pointer'}}></img>
