@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const imageDownloader= require('image-downloader');
 const fs = require('fs');
-const { log } = require('console');
+
 
 require('dotenv').config({path:'./.env'});
 
