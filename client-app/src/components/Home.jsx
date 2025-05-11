@@ -1,7 +1,7 @@
 import React, { useContext, useEffect ,useState } from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
-
+import { UserContext } from "./UserContext";
 
 
 function Home(){
@@ -23,7 +23,7 @@ function Home(){
                 <Link to={`/places/${place._id}`} style={{textDecoration:'none'}}>
                 <div>
                     {place.photo?.[0] && 
-                       <img src={`https://airbnb-66sr.onrender.com/uploads/${place.photo?.[0]}`} className="rounded-3 w-100"
+                       <img src={`http://localhost:4000/uploads/${place.photo?.[0]}`} className="rounded-3 w-100"
                             style={{height:'190px'}}
                             ></img>
                      }
