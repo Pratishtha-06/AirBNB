@@ -20,7 +20,7 @@ app.use('/uploads',express.static(__dirname + '/uploads'));
 app.use(express.urlencoded({extended:true}));
 app.use(cors({
     credentials:true,
-    origin:process.env.APP_URL,
+    origin:'http://localhost:5173',
 }));
 
 const jwtSecret =process.env.JWT_SECRET;
@@ -67,7 +67,7 @@ app.post('/register',async(req,res)=>{
 //Login-----
 app.post('/login',async (req,res)=>{
     try{
-    const {email,password}=req.body;    
+    const {email,password}=req.body;
 
     const existingUser=await User.findOne({email});
     if(existingUser){
@@ -77,7 +77,9 @@ app.post('/login',async (req,res)=>{
         email:existingUser.email,
         id:existingUser._id
        },jwtSecret,(err,token)=>{
-        if(err) throw err;
+        if(err) {
+            throw err; 
+        };
         return res.cookie('token',token)
                   .status(200)
                   .json(existingUser);
@@ -89,14 +91,14 @@ app.post('/login',async (req,res)=>{
         return res.status(404).json({message:"Email not found"});
       }
     }catch(err){
-        console.error("Login error:", err.message);
+        console.error("Login error:", err);
        return res.status(500).json({message:"Internal server error"});
     }
 })
 
 //Profile
 app.get('/profile',(req,res)=>{
-    const{token}=req.cookies;
+   const{token}=req.cookies;
     if(token){
         jwt.verify(token,jwtSecret,{},async(err,userdata)=>{
             if(err)throw err;
@@ -233,5 +235,5 @@ app.get('/bookings',async (req,res)=>{
 
 //Port Connection-----
 app.listen(4000,()=>{
-    console.log("Server started");
+    console.log("Server started on Port : 4000");
 });

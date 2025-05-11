@@ -24,6 +24,7 @@ function Home(){
                 <div>
                     {place.photo?.[0] && 
                        <img src={`http://localhost:4000/uploads/${place.photo?.[0]}`} className="rounded-3 w-100"
+                            style={{height:'190px'}}
                             ></img>
                      }
                 </div>

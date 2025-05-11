@@ -17,7 +17,7 @@ function Gallery({place}){
                     {place.photo?.[0] && 
                         <img src={`http://localhost:4000/uploads/${place.photo[0]}`} 
                              onClick={()=>setShow(true)} 
-                             className="w-100 p-1" 
+                             className="w-100 p-1 h-100" 
                              style={{borderRadius:'25px 0px 0px 25px',cursor:'pointer'}}></img>
                     }
                 </div>

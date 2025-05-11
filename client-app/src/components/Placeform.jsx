@@ -71,9 +71,9 @@ function PlaceForm(){
               await axios.post('/places',placedata);
               setRedirect(true);
              }}      
-       if(redirect){
-         return <Navigate to={'/account/places'}/>
-       }
+            if(redirect){
+              return <Navigate to={'/account/places'}/>
+            }
       
       const  uploadPhoto= async(e)=>{
         const files=e.target.files;
@@ -191,7 +191,7 @@ function PlaceForm(){
             <div className="d-flex row">
             <div className="me-2 col-3 col-md-2" style={{width:'auto'}}>
               <h6 className="mb-1">Check in time</h6>
-              <input placeholder="14" 
+              <input placeholder="14:00" 
                      value={checkin}
                      onChange={(e)=>setCheckIn(e.target.value)}
                      type="text"               
@@ -201,7 +201,7 @@ function PlaceForm(){
 
             <div className="me-2 col-3 col-md-2" style={{width:'auto'}}>
             <h6 className="mb-1">Check out time</h6>
-            <input  placeholder="18" 
+            <input  placeholder="18:00" 
                     value={checkout}
                     onChange={(e)=>setCheckOut(e.target.value)} 
                     type="text" 
