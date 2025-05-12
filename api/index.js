@@ -24,6 +24,7 @@ app.use(cors({
 }));
 
 const jwtSecret =process.env.JWT_SECRET;
+const port = process.env.Port || 4000;
 
 
 const getDataFromReq=(req)=>{
@@ -234,6 +235,6 @@ app.get('/bookings',async (req,res)=>{
 })
 
 //Port Connection-----
-app.listen(4000,()=>{
+app.listen(port,()=>{
     console.log("Server started on Port : 4000");
 });
