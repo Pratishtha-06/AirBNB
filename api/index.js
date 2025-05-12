@@ -98,7 +98,8 @@ app.post('/login',async (req,res)=>{
 })
 
 //Profile
-app.get('/profile',(req,res)=>{
+app.get('/profile',async(req,res)=>{
+    try{
    const{token}=req.cookies;
     if(token){
         jwt.verify(token,jwtSecret,{},async(err,userdata)=>{
@@ -109,6 +110,10 @@ app.get('/profile',(req,res)=>{
     }else{
         res.json(null);
     }
+}catch(err){
+    console.log("Error occured :",err);
+    res.status(500).json("Internal Error")
+}
 })
 
 //Logout
