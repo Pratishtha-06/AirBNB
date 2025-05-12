@@ -23,7 +23,7 @@ function Home(){
                 <Link to={`/places/${place._id}`} style={{textDecoration:'none'}}>
                 <div>
                     {place.photo?.[0] && 
-                       <img src={`http://localhost:4000/uploads/${place.photo?.[0]}`} className="rounded-3 w-100"
+                       <img src={`https://airbnb-n3t2.onrender.com/uploads/${place.photo?.[0]}`} className="rounded-3 w-100"
                             style={{height:'190px'}}
                             ></img>
                      }

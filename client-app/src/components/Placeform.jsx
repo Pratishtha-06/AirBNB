@@ -141,7 +141,7 @@ function PlaceForm(){
             <div className="row ">
             {photo.length >0 && photo.map((link,index) =>(
               <div key={index} className="col-4 position-relative" style={{width:'242px'}}>
-              <img  src={`http://localhost:4000/uploads/${link}`} className="uploaded-photo"></img>
+              <img  src={`https://airbnb-n3t2.onrender.com/uploads/${link}`} className="uploaded-photo"></img>
               
               <button className="star-btn" onClick={(e)=>MainPhoto(e,link)}>
                 {link !== photo[0] && (

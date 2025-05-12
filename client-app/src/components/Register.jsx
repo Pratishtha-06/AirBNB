@@ -22,7 +22,7 @@ function SignIn(){
          return;
         }
 
-       const response = await axios.post('http://localhost:4000/register',{
+       const response = await axios.post('https://airbnb-n3t2.onrender.com/register',{
               name,
               email,
               password,

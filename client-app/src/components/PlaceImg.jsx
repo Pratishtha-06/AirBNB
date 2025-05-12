@@ -6,7 +6,7 @@ function PlaceImg ({place,index=0,className=null,style}){
 
     return (
         <>
-         <img src={'http://localhost:4000/uploads/' + place.photo[index]}
+         <img src={'https://airbnb-n3t2.onrender.com/uploads/' + place.photo[index]}
                          className={className} style={style}/>
         </>
     )

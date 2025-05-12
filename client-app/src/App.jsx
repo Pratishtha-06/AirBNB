@@ -12,7 +12,7 @@ import SinglePage from "./components/SinglePage";
 import BookingPage from "./components/BookingPage";
 import SingleBooking from "./components/SingleBooking";
 
-axios.defaults.baseURL='http://localhost:4000';
+axios.defaults.baseURL='https://airbnb-n3t2.onrender.com';
 axios.defaults.withCredentials=true;
 
 
