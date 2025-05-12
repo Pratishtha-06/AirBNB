@@ -20,7 +20,7 @@ app.use('/uploads',express.static(__dirname + '/uploads'));
 app.use(express.urlencoded({extended:true}));
 app.use(cors({
     credentials:true,
-    origin:'https://airbnb-1-n2o1.onrender.com',
+    origin:'http://localhost:5173',
 }));
 
 const jwtSecret =process.env.JWT_SECRET;
