@@ -33,7 +33,7 @@ function Images({show,setShow}){
             <h6 className="text">{data.title}</h6>
             {
              data?.photo?.length > 0 && data.photo.map((img,index)=>(
-                <img  key={index} src={`https://airbnb-n3t2.onrender.com/uploads/${img}`} 
+                <img  key={index} src={`http://localhost:4000/uploads/${img}`} 
                       className="w-75 h-75 m-2"></img>
              ))}
            </div>
