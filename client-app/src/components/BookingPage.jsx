@@ -9,7 +9,8 @@ function BookingPage (){
    
    const [booking,setBooking]=useState([]);
    useEffect(()=>{
-       axios.get('/bookings').then((response)=>{
+       axios.get('/bookings',{withCredentials:true})
+       .then((response)=>{
        setBooking(response.data);
        })
    },[])

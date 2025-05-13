@@ -81,7 +81,11 @@ app.post('/login',async (req,res)=>{
         if(err) {
             throw err; 
         };
-        return res.cookie('token',token)
+        return res.cookie('token',token, {
+                           httpOnly: true,
+                           secure: true, 
+                            sameSite: 'None',}
+                        )
                   .status(200)
                   .json(existingUser);
          }) 
@@ -123,6 +127,7 @@ app.post('/logout',(req,res)=>{
 
 //Upload by Link
 app.post('/upload-by-link',async(req,res)=>{
+    try{
     const {link} = req.body;
     const newName='photo' + Date.now() + '.jpg';
     await imageDownloader.image({
@@ -130,6 +135,10 @@ app.post('/upload-by-link',async(req,res)=>{
         dest:__dirname + '/uploads/' +newName
     })
     res.json(newName)
+   }catch(err){
+    console.log("Error:",err);
+    res.status(500).json({message:"Server Error"}) 
+   }
 })
 
 //Uploading Files
@@ -176,17 +185,22 @@ app.post('/places',async(req,res)=>{
     })
     }catch(err){
         console.log(err);
-        res.status(500).json("Error occuered :" + err);
+        res.status(500).json("Error occuered :" , err);
     }
 })
 
 //list of places
 app.get('/user-places',async (req,res)=>{
+    try{
     const {token} =req.cookies;
     jwt.verify(token,jwtSecret,{}, async (err,userdata)=>{
         const {id} = userdata;
         res.json( await Place.find({owner:id}) );
     })
+    }catch(err){
+        console.log("Error:",err);
+        res.status(500).json({message:"Server Error"})
+    }
 })
 
 //Place by id
@@ -197,6 +211,7 @@ app.get('/places/:id',async (req,res)=>{
 
 //Updating Places
 app.put('/places',async (req,res)=>{
+    try{
     const {token}=req.cookies;
     const {id,title , address, photo, description,
         perk,extraInfo,  checkin,checkout,maxGuest,price}=req.body;
@@ -214,7 +229,12 @@ app.put('/places',async (req,res)=>{
     } else {
     res.status(403).json('You are not the owner of this place');
   }
-})})
+})}catch(err){
+    console.log("Error:",err);
+    res.status(500).json({message:"Serever Error"})
+    
+}
+})
 
 //Home route
  app.get('/places',async(req,res)=>{
@@ -223,6 +243,7 @@ app.put('/places',async (req,res)=>{
 
 //Bookings
 app.post('/bookings',async(req,res)=>{
+    try {
     const UserData = await getDataFromReq(req);
     const {place,numberOfGuest,checkIn,checkOut,name,email,phone,price}=req.body;
     await Booking.create({place,numberOfGuest,checkIn,checkOut,name,email,phone,price,user:UserData.id})
@@ -231,12 +252,22 @@ app.post('/bookings',async(req,res)=>{
         }).catch((err)=>{
             throw err;
         })
+    }catch(err){
+        console.log("error:",err);
+        res.status(500).json({message:"Server Error"})
+        
+    }
 })
 
 //BookingPage
 app.get('/bookings',async (req,res)=>{
-   const Data = await getDataFromReq(req);
+    try {
+    const Data = await getDataFromReq(req);
     res.json(await Booking.find({user:Data.id}).populate('place'));
+    }catch(err){
+        console.log("error",err);
+        res.status(500).json({message:"Server error"});
+    }
 })
 
 //Port Connection-----
