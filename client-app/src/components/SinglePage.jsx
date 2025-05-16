@@ -5,7 +5,7 @@ import Booking from "./BookingWidget";
 import Gallery from "./PlaceGallery";
 import DOMPurify from 'dompurify' ;
 import ColoredHeart from '../assets/heart.png';
-import Heart from '../assets/heart(1).png'
+import Heart from '../assets/coloredheart.png'
 
 function SinglePage(){
     const {id} =useParams();
