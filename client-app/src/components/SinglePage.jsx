@@ -4,11 +4,13 @@ import { useParams } from "react-router-dom";
 import Booking from "./BookingWidget";
 import Gallery from "./PlaceGallery";
 import DOMPurify from 'dompurify' ;
-import Heart from '../assets/heart.png';
+import ColoredHeart from '../assets/heart.png';
+import Heart from '../assets/heart(1).png'
 
 function SinglePage(){
     const {id} =useParams();
     const [place,setPlace]=useState(null);
+    const [click,setClick]=useState(false);
     
    
     useEffect(()=>{
@@ -39,7 +41,13 @@ function SinglePage(){
                 </a>
               </div>
             <div>
-                <img src={Heart} style={{width:'15px',height:'15px',marginRight:'10px'}}/>
+              {click ? (
+                <img src={Heart} onClick={()=>setClick(true)}
+                     style={{width:'25px',height:'25px',marginRight:'10px'}}/>
+                ):( 
+                 <img src={ColoredHeart} onClick={()=>setClick(false)}
+                     style={{width:'25px',height:'25px',marginRight:'10px'}}/>)     
+              }  
             </div>
            </div>
             
