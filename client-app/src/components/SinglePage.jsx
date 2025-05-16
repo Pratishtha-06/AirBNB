@@ -41,13 +41,8 @@ function SinglePage(){
                 </a>
               </div>
             <div>
-              {click ? (
-                <img src={Heart} onClick={()=>setClick(true)}
+                <img src={click ? ColoredHeart : Heart} onClick={()=>setClick(!click)}
                      style={{width:'25px',height:'25px',marginRight:'10px'}}/>
-                ):( 
-                 <img src={ColoredHeart} onClick={()=>setClick(false)}
-                     style={{width:'25px',height:'25px',marginRight:'10px'}}/>)     
-              }  
             </div>
            </div>
             
