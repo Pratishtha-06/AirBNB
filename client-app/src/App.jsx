@@ -29,6 +29,8 @@ function App(){
              <Route path="/account/places" element={<Places/>}/>
              <Route path="/account/places/new" element={<PlaceForm/>}/>
              <Route path="/account/places/:id" element={<PlaceForm/>}/>
+             <Route path="/account/saves" element={<AccountPage/>}/>
+             <Route path="/account/saved-places" element={<AccountPage/>}/>
              <Route path="/places/:id" element={<SinglePage/>}/>
              <Route path="/account/bookings" element={<BookingPage/>}/>
              <Route path="/account/bookings/:id" element={<SingleBooking/>}/>
