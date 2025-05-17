@@ -163,9 +163,11 @@ app.post('/uploads',photoMiddleware.array('photos',100),async(req,res)=>{
 app.post('/saves',async(req,res)=>{
    try{
     const {token} =req.body;
+    const {placeId} =  req.body;
+
     jwt.verify(token ,jwtSecret,{},async(err,data)=>{
-        if(err) throw err;
-        const {placeId} =  req.body;
+        if(err) res.status(404).json({message:"Unauthenticated User"});
+
         const user =await User.findById(data.id);
         if(!user){
             res.status(404).json("User not found;");
@@ -174,7 +176,9 @@ app.post('/saves',async(req,res)=>{
             user.savedPlace.push(data);
             await user.save();
         }
+        res.json({ message: 'saved' });
     })}catch(err){
+    console.log("error:",err);    
     res.status(500).json("Error:",err);
    }
 })

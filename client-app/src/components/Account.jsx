@@ -11,13 +11,17 @@ function AccountPage(){
     const{subpage}=useParams();
     const [redirect,setRedirect]=useState(null);
     const [saves,setSaves]=useState([]);
+    const [error,setError]=useState("");
 
     useEffect(()=>{
-      axios.get('/saves')
-      .then(({data})=>{
-        const saved = data.some(p => p._id === id);
-        setSaves(saved);
+      axios.get('/saved-places')
+      .then((response)=>{
+        setSaves(response.data);
       })
+      .catch(err => {
+         console.error('Error fetching saved places:', err)
+         setError(err)
+    })
     },[id])
      
     async function logout(){
@@ -54,6 +58,7 @@ function AccountPage(){
      </div> 
      <div className="d-flex flex-column  logbox">
         <div className="px-3 pb-2 pt-4" style={{fontWeight:"bold", fontStyle:'italic', fontSize:'larger'}}>My Saves</div>
+        {error && (<h5 style={{color:'red'}}>{error}</h5>)}
         <div>
          <div className=" d-flex row" >
             {saves.length > 0 && saves.map((place,index)=>(

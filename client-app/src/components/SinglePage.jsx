@@ -12,6 +12,7 @@ function SinglePage(){
     const {id} =useParams();
     const [place,setPlace]=useState(null);
     const {click,setClick}=useContext(UserContext);
+    const [isSaved,setSaved]=useState(false);
     
    
     useEffect(()=>{
