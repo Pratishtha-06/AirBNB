@@ -160,7 +160,7 @@ app.post('/uploads',photoMiddleware.array('photos',100),async(req,res)=>{
 }
 })
 //save places
-axios.post('/saves',async(req,res)=>{
+app.post('/saves',async(req,res)=>{
    try{
     const {token} =req.body;
     jwt.verify(token ,jwtSecret,{},async(err,data)=>{
@@ -179,7 +179,7 @@ axios.post('/saves',async(req,res)=>{
    }
 })
 //get saves 
-axios.get('/saved-places',async(req,res)=>{
+app.get('/saved-places',async(req,res)=>{
      try{
     const { token } = req.cookies;
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
