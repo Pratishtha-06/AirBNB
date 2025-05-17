@@ -160,7 +160,7 @@ app.post('/uploads',photoMiddleware.array('photos',100),async(req,res)=>{
 }
 })
 //save places
-app.post('/saves',async(req,res)=>{
+/*app.post('/saves',async(req,res)=>{
    try{
     const {token} =req.body;
     const {placeId} =  req.body;
@@ -197,7 +197,7 @@ app.get('/saved-places',async(req,res)=>{
     }catch(err){
         console.log("Error:",err);
         res.status(500).json({message:"Server Error"})
-    }})
+    }})*/
 
 //Places
 app.post('/places',async(req,res)=>{

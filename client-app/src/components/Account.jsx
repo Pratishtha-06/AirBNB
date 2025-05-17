@@ -13,7 +13,7 @@ function AccountPage(){
     const [saves,setSaves]=useState([]);
     const [error,setError]=useState("");
 
-    useEffect(()=>{
+  /*  useEffect(()=>{
       axios.get('/saved-places')
       .then((response)=>{
         setSaves(response.data);
@@ -22,7 +22,7 @@ function AccountPage(){
          console.error('Error fetching saved places:', err)
          setError(err)
     })
-    },[id])
+    },[id])*/
      
     async function logout(){
       await axios.post('/logout');
@@ -56,7 +56,7 @@ function AccountPage(){
         <div className="ud-2 pt-2 ps-2">{user.email}</div>
         <button className="btn btn-danger my-3 mx-3" style={{width:'80px'}} onClick={logout}>Logout</button>
      </div> 
-     <div className="d-flex flex-column  logbox">
+     {/*<div className="d-flex flex-column  logbox">
         <div className="px-3 pb-2 pt-4" style={{fontWeight:"bold", fontStyle:'italic', fontSize:'larger'}}>My Saves</div>
         {error && (<h5 style={{color:'red'}}>{error}</h5>)}
         <div>
@@ -83,7 +83,7 @@ function AccountPage(){
         </div>
         </div>
        
-     </div> 
+     </div> */}
      </div>
      )}
      { subpage === 'places' && (

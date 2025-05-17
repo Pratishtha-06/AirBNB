@@ -30,7 +30,7 @@ function SinglePage(){
     const handleClick=async()=>{
       try{
       setClick(!click);
-      await axios.post('/saves',{placeId : id})
+     // await axios.post('/saves',{placeId : id})
       }catch(err){
         console.log("Error:",err);
       }
