@@ -1,16 +1,17 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Booking from "./BookingWidget";
 import Gallery from "./PlaceGallery";
 import DOMPurify from 'dompurify' ;
 import ColoredHeart from '../assets/heart.png';
 import Heart from '../assets/coloredheart.png'
+import { UserContext } from "./UserContext";
 
 function SinglePage(){
     const {id} =useParams();
     const [place,setPlace]=useState(null);
-    const [click,setClick]=useState(false);
+    const {click,setClick}=useContext(UserContext);
     
    
     useEffect(()=>{
@@ -25,6 +26,14 @@ function SinglePage(){
     const sanitizeDes = DOMPurify.sanitize(place.description);
     const sanitizeInfo = DOMPurify.sanitize(place.extraInfo);
     
+    const handleClick=async()=>{
+      try{
+      setClick(!click);
+      await axios.post('/saves',{placeId : id})
+      }catch(err){
+        console.log("Error:",err);
+      }
+    }
    
     return(
         <>
@@ -41,7 +50,7 @@ function SinglePage(){
                 </a>
               </div>
             <div>
-                <img src={click ? ColoredHeart : Heart} onClick={()=>setClick(!click)}
+                <img src={click ? ColoredHeart : Heart} onClick={handleClick}
                      style={{width:'25px',height:'25px',marginRight:'10px'}}/>
             </div>
            </div>

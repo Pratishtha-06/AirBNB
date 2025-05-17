@@ -158,8 +158,43 @@ app.post('/uploads',photoMiddleware.array('photos',100),async(req,res)=>{
 }catch(err){
     res.status(500).json("error occured :" + err);
 }
-
 })
+//save places
+axios.post('/saves',async(req,res)=>{
+   try{
+    const {token} =req.body;
+    jwt.verify(token ,jwtSecret,{},async(err,data)=>{
+        if(err) throw err;
+        const {placeId} =  req.body;
+        const user =await User.findById(data.id);
+        if(!user){
+            res.status(404).json("User not found;");
+        }
+        if(!user.savedPlace.includes(placeId)){
+            user.savedPlace.push(data);
+            await user.save();
+        }
+    })}catch(err){
+    res.status(500).json("Error:",err);
+   }
+})
+//get saves 
+axios.get('/saved-places',async(req,res)=>{
+     try{
+    const { token } = req.cookies;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+      if (err) return res.status(401).json({ message: "Invalid token" });
+
+      const user = await User.findById(userData.id).populate('savedPlaces');
+      if (!user) return res.status(404).json({ message: "User not found" });
+
+      res.json(user.savedPlaces); // returns saved places
+    });
+    }catch(err){
+        console.log("Error:",err);
+        res.status(500).json({message:"Server Error"})
+    }})
+
 //Places
 app.post('/places',async(req,res)=>{
     try{
