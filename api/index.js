@@ -20,7 +20,7 @@ app.use('/uploads',express.static(__dirname + '/uploads'));
 app.use(express.urlencoded({extended:true}));
 app.use(cors({
     credentials:true,
-    origin:'https://airbnb-1-4neq.onrender.com',
+    origin:['https://airbnb-1-4neq.onrender.com','http://localhost:5173']
 }));
 
 const jwtSecret =process.env.JWT_SECRET;
@@ -159,45 +159,6 @@ app.post('/uploads',photoMiddleware.array('photos',100),async(req,res)=>{
     res.status(500).json("error occured :" + err);
 }
 })
-//save places
-/*app.post('/saves',async(req,res)=>{
-   try{
-    const {token} =req.body;
-    const {placeId} =  req.body;
-
-    jwt.verify(token ,jwtSecret,{},async(err,data)=>{
-        if(err) res.status(404).json({message:"Unauthenticated User"});
-
-        const user =await User.findById(data.id);
-        if(!user){
-            res.status(404).json("User not found;");
-        }
-        if(!user.savedPlace.includes(placeId)){
-            user.savedPlace.push(data);
-            await user.save();
-        }
-        res.json({ message: 'saved' });
-    })}catch(err){
-    console.log("error:",err);    
-    res.status(500).json("Error:",err);
-   }
-})
-//get saves 
-app.get('/saved-places',async(req,res)=>{
-     try{
-    const { token } = req.cookies;
-    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-      if (err) return res.status(401).json({ message: "Invalid token" });
-
-      const user = await User.findById(userData.id).populate('savedPlaces');
-      if (!user) return res.status(404).json({ message: "User not found" });
-
-      res.json(user.savedPlaces); // returns saved places
-    });
-    }catch(err){
-        console.log("Error:",err);
-        res.status(500).json({message:"Server Error"})
-    }})*/
 
 //Places
 app.post('/places',async(req,res)=>{
@@ -225,6 +186,43 @@ app.post('/places',async(req,res)=>{
     }catch(err){
         console.log(err);
         res.status(500).json("Error occuered :" , err);
+    }
+})
+
+//saves
+app.post('/account',async(req,res)=>{
+  try{
+  const {token}=req.cookies;
+  const {placeId}=req.body;
+  jwt.verify(token, jwtSecret,{},async(err,user)=>{
+   if(err) {return res.status(403).json({message:"Internal Error"});}
+
+   const user = await User.findById(user.id);
+   if(!user.saves.includes(placeId)){
+     user.saves.push(placeId);
+     await user.save();
+   }
+   })
+  res.json({ message: "Place saved to account" }); 
+    }catch(err){
+        console.error("Error saving to account:", err);
+    res.status(500).json({ message: "Internal server error" });
+    }
+})
+
+//get saves
+app.get('/account',(req,res)=>{
+    const {token}=req.cookies;
+    try{
+    jwt.verify(token,jwtSecret,{},async(err,data)=>{
+        if(err) return res.status(500).json({message:"Internal Error"});
+        const user = await User.findById(data.id).populate('saves');
+        res.json(user.savedPlaces);
+    })
+    }catch(err){
+        console.log("error",err);
+         res.status(500).json({ message: "Server error" });
+        
     }
 })
 

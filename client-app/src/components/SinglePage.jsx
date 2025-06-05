@@ -12,7 +12,6 @@ function SinglePage(){
     const {id} =useParams();
     const [place,setPlace]=useState(null);
     const {click,setClick}=useContext(UserContext);
-    const [isSaved,setSaved]=useState(false);
     
    
     useEffect(()=>{
@@ -30,7 +29,9 @@ function SinglePage(){
     const handleClick=async()=>{
       try{
       setClick(!click);
-     // await axios.post('/saves',{placeId : id})
+      await axios.post('https://airbnb-3o0c.onrender.com/account',{placeId:place._id});
+      console.log(place);
+      
       }catch(err){
         console.log("Error:",err);
       }

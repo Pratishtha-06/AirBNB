@@ -1,5 +1,3 @@
-import React from "react";
-
 function PlaceImg ({place,index=0,className=null,style}){
     if (!place?.photo || place.photo.length === 0) return null;
     if (!className) className = 'object-cover w-100 h-100';
