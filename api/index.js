@@ -194,13 +194,13 @@ app.post('/account',async(req,res)=>{
   try{
   const {token}=req.cookies;
   const {placeId}=req.body;
-  jwt.verify(token, jwtSecret,{},async(err,user)=>{
+  jwt.verify(token, jwtSecret,{},async(err,data)=>{
    if(err) {return res.status(403).json({message:"Internal Error"});}
 
-   const user = await User.findById(user.id);
-   if(!user.saves.includes(placeId)){
-     user.saves.push(placeId);
-     await user.save();
+   const userId = await User.findById(data.id);
+   if(!userId.saves.includes(placeId)){
+     userId.saves.push(placeId);
+     await userId.save();
    }
    })
   res.json({ message: "Place saved to account" }); 
