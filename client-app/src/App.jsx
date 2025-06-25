@@ -1,4 +1,4 @@
-import { BrowserRouter, Route,Routes } from "react-router";
+import { Route,Routes } from "react-router";
 import Login from "./components/Login";
 import Layout from "./components/layout";
 import Home from "./components/Home";
@@ -21,7 +21,7 @@ function App(){
         <>
         <UserContextProvider>
          <Routes>
-           <Route path='/' element={<Layout/>}>
+             <Route path='/' element={<Layout/>}>
              <Route index element={<Home/>}/>
              <Route path='/login' element={<Login/>}/>
              <Route path='/register' element={<SignIn/>}/>
@@ -29,13 +29,12 @@ function App(){
              <Route path="/account/places" element={<Places/>}/>
              <Route path="/account/places/new" element={<PlaceForm/>}/>
              <Route path="/account/places/:id" element={<PlaceForm/>}/>
-         
              <Route path="/places/:id" element={<SinglePage/>}/>
              <Route path="/account/bookings" element={<BookingPage/>}/>
              <Route path="/account/bookings/:id" element={<SingleBooking/>}/>
 
 
-          </Route>
+             </Route>
          </Routes>
         </UserContextProvider>
         

@@ -7,6 +7,7 @@ import DOMPurify from 'dompurify' ;
 import ColoredHeart from '../assets/heart.png';
 import Heart from '../assets/coloredheart.png'
 import { UserContext } from "./UserContext";
+import Support from "./Support";
 
 function SinglePage(){
     const {id} =useParams();
@@ -29,8 +30,8 @@ function SinglePage(){
     const handleClick=async()=>{
       try{
       setClick(!click);
-      await axios.post('https://airbnb-3o0c.onrender.com/account',{placeId:place._id});
-      console.log(place);
+      await axios.post(`https://airbnb-3o0c.onrender.com/places/${place._id}`,{placeId:place._id});
+      console.log("Saved Place:",place);
       
       }catch(err){
         console.log("Error:",err);
@@ -81,6 +82,9 @@ function SinglePage(){
                      dangerouslySetInnerHTML={{__html:sanitizeInfo}}></div>
 
             </div>
+        </div>
+        <div style={{backgroundColor:'#f2f2f2', paddingTop:'20px'}}>
+          <Support/>
         </div>
         </>
     )

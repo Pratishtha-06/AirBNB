@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 function SignIn(){
@@ -7,6 +7,7 @@ function SignIn(){
      const [password,setPassword]=useState("");
      const [name,setName]=useState(""); 
      const [error,setError]=useState("");
+     const navigate = useNavigate();
 
      const registerUser= async (e)=>{
        e.preventDefault();
@@ -28,7 +29,11 @@ function SignIn(){
               password,
        })
        const backendmsg=response.data.message; 
+       if(response.status==201){
+        navigate('/login');
+       }
           setError(backendmsg);
+       
        }catch(error){
           setError("Registration failed.Please try again later");
        }

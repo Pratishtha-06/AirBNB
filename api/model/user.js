@@ -6,8 +6,6 @@ const UserSchema = new mongoose.Schema({
   email:{type:String,unique:true},
   password:{type:String,unique:true} ,
   saves:[{type:mongoose.Schema.Types.ObjectId,ref:'Places'}]
-
-
 })
 
 UserSchema.pre('save',async function(next){

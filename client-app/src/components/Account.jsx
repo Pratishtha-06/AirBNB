@@ -46,7 +46,7 @@ function AccountPage(){
         <button className="btn btn-danger my-3 mx-3" style={{width:'80px'}} onClick={logout}>Logout</button>
      </div> 
      </div>
-     <div style={{border:'1px solid grey',borderRadius:'7px',marginTop:'10px'}}>
+     <div style={{border:'1px solid grey',borderRadius:'7px',margin:'10px 0px'}}>
      <Saves/>
      </div>
       </>

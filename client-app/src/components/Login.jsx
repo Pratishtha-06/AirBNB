@@ -86,7 +86,6 @@ function Login(){
           <div>Don't have account ? <Link to={'/register'} style={{color:"black", fontWeight:'500',fontStyle:'italic'}}>Register</Link> now</div>  
           </form>      
         </div>
-
         </>
     )
 }

@@ -29,9 +29,15 @@ const port = process.env.Port || 4000;
 
 const getDataFromReq=(req)=>{
   return new Promise((resolve,reject)=>{
+    console.log('Token:', req.cookies.token);
     jwt.verify(req.cookies.token,jwtSecret,{},(err,Userdata)=>{
-        if(err) reject(err);
+        if(err){
+            console.log('JWT verify error:', err);
+            reject(err);
+        }else{
+        console.log('JWT verified user data:', Userdata); 
         resolve(Userdata);
+       }
     })
   }) 
 }
@@ -190,20 +196,21 @@ app.post('/places',async(req,res)=>{
 })
 
 //saves
-app.post('/account',async(req,res)=>{
+app.post('/places/:id',async(req,res)=>{
   try{
   const {token}=req.cookies;
-  const {placeId}=req.body;
+  const placeId=req.params.id;
   jwt.verify(token, jwtSecret,{},async(err,data)=>{
    if(err) {return res.status(403).json({message:"Internal Error"});}
 
-   const userId = await User.findById(data.id);
-   if(!userId.saves.includes(placeId)){
-     userId.saves.push(placeId);
-     await userId.save();
+   const user = await User.findById(data.id); 
+   
+   if(!user.saves.includes(placeId)){
+     user.saves.push(placeId);
+     await user.save();
    }
+   return res.json({ message: "Place saved to account" }); 
    })
-  res.json({ message: "Place saved to account" }); 
     }catch(err){
         console.error("Error saving to account:", err);
     res.status(500).json({ message: "Internal server error" });
@@ -211,18 +218,19 @@ app.post('/account',async(req,res)=>{
 })
 
 //get saves
-app.get('/account',(req,res)=>{
-    const {token}=req.cookies;
-    try{
-    jwt.verify(token,jwtSecret,{},async(err,data)=>{
-        if(err) return res.status(500).json({message:"Internal Error"});
-        const user = await User.findById(data.id).populate('saves');
-        res.json(user.savedPlaces);
-    })
+app.get('/account',async(req,res)=>{
+    console.log(" /account route hit");
+     try {
+    const Data = await getDataFromReq(req);
+    const user =await User.findById(Data.id).populate('saves');
+
+    console.log("Data:",Data.id);
+    console.log("User:",user);
+    console.log("DATA",{saves:user.saves});
+    res.json({saves:user.saves});
     }catch(err){
         console.log("error",err);
-         res.status(500).json({ message: "Server error" });
-        
+        res.status(500).json({message:"Server error"});
     }
 })
 

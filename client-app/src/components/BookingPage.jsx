@@ -4,6 +4,7 @@ import axios from "axios";
 import PlaceImg from "./PlaceImg";
 import {differenceInCalendarDays, format} from 'date-fns';
 import { Link } from "react-router-dom";
+import OOPS from '../assets/balloon.png';
 
 function BookingPage (){
    
@@ -18,7 +19,7 @@ function BookingPage (){
     <>
        <ProfileNav/>
        
-       {booking?.length > 0 && booking.map((book,index)=>{
+       {booking?.length > 0 ?( booking.map((book,index)=>{
         return (
           <Link key={index} 
                 to={`/account/bookings/${book._id}`}
@@ -62,7 +63,12 @@ function BookingPage (){
             </div>
              
           </Link>
-      )})}
+      )})):(
+        <div style={{textAlign:'center',marginTop:'30px'}}>
+          <img src={OOPS} style={{width:'45px',height:'45px'}}/>
+          <div>No Bookings</div>
+        </div>
+      )}
       
     
     </>

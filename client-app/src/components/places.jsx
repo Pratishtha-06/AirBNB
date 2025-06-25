@@ -4,6 +4,7 @@ import ProfileNav from "./ProfileNav";
 import axios from 'axios';
 import PlaceImg from "./PlaceImg";
 import DOMPurify from 'dompurify';
+import OOPS from '../assets/balloon.png';
 
 
 
@@ -36,7 +37,7 @@ function Places(){
            Add new places</Link>
            <div className="fw-bold fs-5 fst-italic mt-3">List of all added places</div>
 
-           {places.length > 0 && places.map((place,index)=>
+           {places.length > 0 ?( places.map((place,index)=>
              <Link to={'/account/places/'+place._id}  key={index} className="desc">
 
               <div className="bg-light" style={{width:'210px',height:'180px',margin:'10px',flexShrink:0}}>
@@ -48,6 +49,11 @@ function Places(){
                <div className="scroll" dangerouslySetInnerHTML={{__html:DOMPurify.sanitize(place.description)}}></div>
               </div> 
              </Link>
+           )):(
+            <div style={{textAlign:'center',marginTop:'30px'}}>
+                      <img src={OOPS} style={{width:'45px',height:'45px'}}/>
+                      <div>You haven't added anything</div>
+            </div>
            )}
         </div>
        

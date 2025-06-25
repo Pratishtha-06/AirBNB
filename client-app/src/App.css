@@ -203,3 +203,20 @@
   margin-left: 5px;
   padding-left: 5px;
 }
+.head{
+    color: gray;
+    width:'137px';
+}
+.head:hover{
+    color: black;
+    cursor: pointer;
+}
+.show{
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.show-open{
+
+}
