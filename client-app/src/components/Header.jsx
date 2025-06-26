@@ -2,7 +2,7 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; 
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { UserContext} from './UserContext';
 import ScreenSize from './ScreenSize';
 
@@ -10,11 +10,12 @@ import ScreenSize from './ScreenSize';
 function Header() {
   const{user}=useContext(UserContext);
   const width = ScreenSize();
+  const {pathname}=useLocation();
   
   
   return (
     <>
-    <header className='px-3 py-3 d-flex justify-content-between h-50 bg-light' 
+    <header className='px-3 py-3 d-flex justify-content-between align-items-center h-50 bg-light' 
             style={{position:'sticky',top:'0px',zIndex:'1'}}>
      
       { width > 450 && (
@@ -22,7 +23,10 @@ function Header() {
        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="logo">
        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
        </svg>
-       <span style={{fontWeight:'bold', color:'black',textAlign:'center',fontSize:'large' }}>AirBNB</span>
+       <span style={{fontWeight:'bold', color:'black',textAlign:'center',fontSize:'large' }}
+             onClick={()=>(pathname=='/'?window.scrollTo({ top: 0, behavior: 'smooth' }):{})}>
+              AirBNB
+        </span>
       </Link>
       )}
 
@@ -53,6 +57,7 @@ function Header() {
            )}
           
     </header>
+    
        </>
       
     )

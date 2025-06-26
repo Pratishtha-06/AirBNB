@@ -8,13 +8,15 @@ import ColoredHeart from '../assets/heart.png';
 import Heart from '../assets/coloredheart.png'
 import { UserContext } from "./UserContext";
 import Support from "./Support";
+import ScreenSize from "./ScreenSize";
 
 function SinglePage(){
     const {id} =useParams();
     const [place,setPlace]=useState(null);
-    const {click,setClick}=useContext(UserContext);
+    const width = ScreenSize();
+    const {liked,setLiked} =useContext(UserContext);
     
-   
+
     useEffect(()=>{
         if(!id) return ;
         axios.get(`/places/${id}`)
@@ -29,9 +31,11 @@ function SinglePage(){
     
     const handleClick=async()=>{
       try{
-      setClick(!click);
-      await axios.post(`https://airbnb-3o0c.onrender.com/places/${place._id}`,{placeId:place._id});
-      console.log("Saved Place:",place);
+      const res = await axios.post(`https://airbnb-3o0c.onrender.com/places/${place._id}`,{},{withCredentials:true});
+      setLiked(res.data);
+      console.log("RES",res);
+      
+      console.log("T/F:",res.data.saved);
       
       }catch(err){
         console.log("Error:",err);
@@ -53,15 +57,19 @@ function SinglePage(){
                 </a>
               </div>
             <div>
-                <img src={click ? ColoredHeart : Heart} onClick={handleClick}
-                     style={{width:'25px',height:'25px',marginRight:'10px'}}/>
+              {place && (
+                <img src={liked ? ColoredHeart : Heart} onClick={handleClick}
+                     style={{width:'25px',height:'25px',marginRight:'10px',cursor:'pointer'}}/>
+              )}
             </div>
            </div>
             
          <Gallery place={place}/>
 
             <div className="mx-3" style={{paddingBottom:'10px'}}>
-            <div className="mb-3 mt-2 d-flex" style={{justifyContent:'space-between'}}>
+            <div className="mb-3 mt-2 d-flex" 
+                 style={{flexDirection:(width<500?'column':'row'),
+                  alignItems:(width<500?'center':{}),justifyContent:'space-between'}}>
                 
                 <div> 
                   <h4 className="mb-0">Description</h4>

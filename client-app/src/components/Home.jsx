@@ -1,7 +1,6 @@
-import React, { useContext, useEffect ,useState } from "react";
+import {  useEffect ,useState } from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
-
 function Home(){
    const [places,setPlaces] = useState([]);
    
@@ -17,7 +16,7 @@ function Home(){
         <>
         <div className=" d-flex row" >
             {places.length > 0 && places.map((place,index)=>(
-                <div key={index} className="Place row-cols-3 ">
+                <div key={index} className="Place cols-lg-3 col-6 ">
                 <Link to={`/places/${place._id}`} style={{textDecoration:'none'}}>
                 <div>
                     {place.photo?.[0] && 
@@ -37,6 +36,7 @@ function Home(){
                  
             ))}
         </div>
+    
         </>
     )
 }

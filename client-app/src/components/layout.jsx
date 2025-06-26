@@ -3,10 +3,13 @@ import Header from "./Header";
 import { Outlet, useLocation } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import Footer from "./Footer";
+import FooterNav from './FooterNav';
+import ScreenSize from "./ScreenSize";
 
 function Layout(){
     const {ready} =useContext(UserContext);
     const {pathname} = useLocation();
+    const width =ScreenSize();
 
     return(
         <>
@@ -16,6 +19,9 @@ function Layout(){
         {ready && (<Outlet/>)}
         {(pathname == '/')&& (
             <Footer/>
+        )}
+        {width<450 &&  (
+        <FooterNav/>
         )}
          </div>
         

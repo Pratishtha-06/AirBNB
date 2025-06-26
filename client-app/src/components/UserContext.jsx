@@ -7,6 +7,7 @@ function UserContextProvider({children}){
   const [user,setUser]=useState(null);  
   const [ready,setReady]=useState(false);
   const [click,setClick]=useState(false);
+  const [liked,setLiked]=useState(false);
  
   
   useEffect(() =>{
@@ -25,7 +26,7 @@ function UserContextProvider({children}){
   },[])
     return(
         <>
-        <UserContext.Provider  value={{user,setUser,ready,click,setClick}}>
+        <UserContext.Provider  value={{user,setUser,ready,click,setClick,liked,setLiked}}>
          {children}
         </UserContext.Provider>
         </>

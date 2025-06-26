@@ -202,14 +202,24 @@ app.post('/places/:id',async(req,res)=>{
   const placeId=req.params.id;
   jwt.verify(token, jwtSecret,{},async(err,data)=>{
    if(err) {return res.status(403).json({message:"Internal Error"});}
-
+   try{
    const user = await User.findById(data.id); 
+   const alreadySaved = user.saves.map(p => p.toString()).includes(placeId);
+
+    if (!alreadySaved) {
+      user.saves.push(placeId); 
+      await user.save();
+      return res.json({ saved: true });
+    } else {
+      user.saves = user.saves.filter(p => p.toString() !== placeId); 
+      await user.save();
+      return res.json({ saved: false });
+    }
+    }catch(err){
+        console.error("DB error:", err);
+        return res.status(500).json({ message: "Database error" });
+    }
    
-   if(!user.saves.includes(placeId)){
-     user.saves.push(placeId);
-     await user.save();
-   }
-   return res.json({ message: "Place saved to account" }); 
    })
     }catch(err){
         console.error("Error saving to account:", err);
@@ -219,15 +229,12 @@ app.post('/places/:id',async(req,res)=>{
 
 //get saves
 app.get('/account',async(req,res)=>{
-    console.log(" /account route hit");
      try {
     const Data = await getDataFromReq(req);
     const user =await User.findById(Data.id).populate('saves');
 
-    console.log("Data:",Data.id);
-    console.log("User:",user);
-    console.log("DATA",{saves:user.saves});
     res.json({saves:user.saves});
+
     }catch(err){
         console.log("error",err);
         res.status(500).json({message:"Server error"});
