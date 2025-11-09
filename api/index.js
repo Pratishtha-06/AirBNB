@@ -329,8 +329,9 @@ app.get('/bookings',async (req,res)=>{
 app.post('/api/payment',async(req,res)=>{
    try{ 
    const {data} = req.body;
+   
    const options = {
-    amount : data.price * 100,
+    amount : price * 100,
     currency : "INR",
     notes:{
         email:data.email,
@@ -341,7 +342,7 @@ app.post('/api/payment',async(req,res)=>{
 
    const createOrder = await instance.orders.create(options);
    res.status(200).json({success:true,createOrder});
-   
+
   }catch(err){
     console.log("Error in payment",err);
     res.status(500).json({message:"Server Error"});
