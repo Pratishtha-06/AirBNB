@@ -12,10 +12,11 @@ function Saves(){
      useEffect(()=>{
           axios.get('/account',{withCredentials:true})
           .then((res)=>{
-            const savedIds = res.data.saves;
+            const savedIds = res.data.saves
             console.log("saves:",savedIds);
             
             setSavePlaces(savedIds);
+            setLiked(savedIds.includes(saveplaces._id));
 
           })
           .catch((err)=>{
@@ -32,7 +33,7 @@ function Saves(){
                 <Link to={`/places/${place._id}`} key={place._id}  
                       className="text-decoration-none col-lg-3 col-md-4 col-6 text-dark ">
                     <div className="w-100" style={{height:'90%'}}>
-                    <img src={`https://airbnb-3o0c.onrender.com/uploads/${place.photo[0]}`} alt="pic"
+                    <img src={`https://airbnb-3o0c.onrender.com/uploads/${place.photo}`} alt="pic"
                          style={{borderRadius:'15px',width:'100%',height:'100%'}}/>
                     </div>
                     <h6>{place.title}</h6>     

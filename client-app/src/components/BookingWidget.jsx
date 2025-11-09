@@ -46,9 +46,16 @@ function Booking({places}){
             return;
          }   
       try {
-      const data = await axios.post('/bookings',{place : places._id ,numberOfGuest
-        ,checkIn,checkOut,name,email,phone,
-        price:numOfNight*places.price },{withCredentials:true});
+      const data = await axios.post('/bookings',{
+         place : places._id,
+         numberOfGuest,
+         checkIn,
+         checkOut,
+         name,
+         email,
+         phone,
+         price:numOfNight*places.price
+       },{withCredentials:true});
          setBookingId(data.data._id);
          setRedirect(true);
         

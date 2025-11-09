@@ -19,7 +19,7 @@ function UserContextProvider({children}){
       })
       .catch((err)=>{
         console.log("Error found:",err);
-        setUser(null)
+        setUser(null);
        })
       
     }

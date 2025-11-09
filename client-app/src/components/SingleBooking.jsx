@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 function SingleBooking (){
     const {id} =useParams();
     const [booking,setBooking]=useState('');
+    const [data,setData] = useState('');
     
 
     useEffect(()=>{
@@ -15,6 +16,8 @@ function SingleBooking (){
            if(id){ 
            const foundData =response.data
            const found=foundData.find(({_id})=> _id === id);
+           setData(found);
+           
            if(found){
             setBooking(found);
            }}})
@@ -22,9 +25,42 @@ function SingleBooking (){
     if(!booking) return '';
 
     const PayNow=async()=>{
-      const  foundData = {email ,phone, price:booking.price};
-      getCheckS
-    }
+    try{
+      const {data:keyData} = await axios.get('/api/get-key');
+      const {key} = keyData;
+         console.log(key); 
+
+      const {data:orderData} = await axios.post('/api/payment' , { 
+         email:data.email,
+         phone:data.phone,
+         price:booking.price
+        });
+      console.log(orderData); 
+
+      const {order} = orderData;
+      const options = {
+        key, 
+        amount: booking.price,
+        currency: 'INR',
+        name: 'AirBNB',
+        description: 'Test Transaction',
+        order_id: order.id,
+        callback_url: 'api/paymentVerification',
+        prefill: {
+          name: data.name,
+          email: data.email,
+          contact:data.phone, 
+        },
+        theme: {
+          color: '#F37254'
+        }
+    };
+      const rzp = new Razorpay(options);
+      rzp.open();
+
+    }catch(err){
+        console.log("ERROR:",err);
+    }}
 
 
     return (

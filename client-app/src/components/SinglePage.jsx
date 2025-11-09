@@ -32,9 +32,7 @@ function SinglePage(){
     const handleClick=async()=>{
       try{
       const res = await axios.post(`https://airbnb-3o0c.onrender.com/places/${place._id}`,{},{withCredentials:true});
-      setLiked(res.data);
-      console.log("RES",res);
-      
+      setLiked(res.data.saved);
       console.log("T/F:",res.data.saved);
       
       }catch(err){

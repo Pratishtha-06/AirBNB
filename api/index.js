@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const imageDownloader= require('image-downloader');
 const fs = require('fs');
+const instance = require('./config/razorpayController.js');
 
 
 require('dotenv').config({path:'./.env'});
@@ -25,6 +26,8 @@ app.use(cors({
 
 const jwtSecret =process.env.JWT_SECRET;
 const port = process.env.Port || 4000;
+const Test_Key = process.env.TEST_API_KEY;
+const Test_SecretKey = process.env.TEST_KEY_SECRET;
 
 
 const getDataFromReq=(req)=>{
@@ -90,7 +93,7 @@ app.post('/login',async (req,res)=>{
         return res.cookie('token',token, {
                            httpOnly: true,
                            secure: true, 
-                            sameSite: 'None',}
+                           sameSite: 'None',}
                         )
                   .status(200)
                   .json(existingUser);
@@ -318,8 +321,30 @@ app.get('/bookings',async (req,res)=>{
     res.json(await Booking.find({user:Data.id}).populate('place'));
     }catch(err){
         console.log("error",err);
-        res.status(500).json({message:"Server error"});
+        res.status(500).json({message:"Server error",error: err.message });
     }
+})
+
+//Payment 
+app.post('/api/payment',async(req,res)=>{
+   const {data} = req.body;
+   const options = {
+    amount : data.price * 100,
+    currency : "INR",
+    notes:{
+        email:data.email,
+        phone:data.phone
+    },
+    receipt:'reciept_'+Date.now()
+   }
+
+   const createOrder = await instance.orders.create(options);
+   res.status(200).json({success:true,createOrder});
+})
+
+//Get-Key
+app.get('/api/get-key',async(req,res)=>{
+    res.status(200).json({key:Test_Key});
 })
 
 //Port Connection-----
