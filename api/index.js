@@ -327,16 +327,14 @@ app.get('/bookings',async (req,res)=>{
 
 //Payment 
 app.post('/api/payment',async(req,res)=>{
+     console.log("Incoming body:", req.body);
    try{ 
-   const {data} = req.body;
-   
+    console.log(" Payment Request Body:", req.body);
+   const {email,phone} = req.body;
    const options = {
     amount : price * 100,
     currency : "INR",
-    notes:{
-        email:data.email,
-        phone:data.phone
-    },
+    notes:{ email,phone },
     receipt:'reciept_'+Date.now()
    }
 

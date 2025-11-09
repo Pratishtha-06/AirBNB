@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 function SingleBooking (){
     const {id} =useParams();
     const [booking,setBooking]=useState('');
-    const [data,setData] = useState('');
+    const [detail,setDetail] = useState('');
     
 
     useEffect(()=>{
@@ -16,7 +16,7 @@ function SingleBooking (){
            if(id){ 
            const foundData =response.data
            const found=foundData.find(({_id})=> _id === id);
-           setData(found);
+           setDetail(found);
            
            if(found){
             setBooking(found);
@@ -28,28 +28,30 @@ function SingleBooking (){
     try{
       const {data:keyData} = await axios.get('/api/get-key');
       const {key} = keyData; 
-
-      const {data:orderData} = await axios.post('/api/payment' , { 
-        data:{
-         email:data.email,
-         phone:data.phone,
+      
+      
+       alert("Initialise"); 
+      const {data:orderData} = await axios.post('https://airbnb-3o0c.onrender.com/api/payment' , { 
+         email:detail.email,
+         phone:detail.phone,
          price:booking.price
-        }});
-      console.log("orderdata",orderData); 
-
+        });
+      alert("orderdata",orderData); 
+      console.log("OrderData",orderData);
+        
       const {createOrder} = orderData;
       const options = {
         key, 
-        amount: createOrder.price,
+        amount: createOrder.amount,
         currency: 'INR',
         name: 'AirBNB',
         description: 'Test Transaction',
         order_id: createOrder.id,
         callback_url: 'api/paymentVerification',
         prefill: {
-          name: data.name,
-          email: data.email,
-          contact:data.phone, 
+          name: detail.name,
+          email: detail.email,
+          contact:detail.phone, 
         },
         theme: {
           color: '#F37254'
