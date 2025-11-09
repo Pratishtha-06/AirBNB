@@ -30,20 +30,21 @@ function SingleBooking (){
       const {key} = keyData; 
 
       const {data:orderData} = await axios.post('/api/payment' , { 
+        data:{
          email:data.email,
          phone:data.phone,
          price:booking.price
-        });
+        }});
       console.log("orderdata",orderData); 
 
-      const {order} = orderData;
+      const {createOrder} = orderData;
       const options = {
         key, 
-        amount: booking.price,
+        amount: createOrder.price,
         currency: 'INR',
         name: 'AirBNB',
         description: 'Test Transaction',
-        order_id: order.id,
+        order_id: createOrder.id,
         callback_url: 'api/paymentVerification',
         prefill: {
           name: data.name,
@@ -58,7 +59,7 @@ function SingleBooking (){
       rzp.open();
 
     }catch(err){
-        console.log("ERROR:",err);
+        console.log("ERROR :",err);
     }}
 
 
