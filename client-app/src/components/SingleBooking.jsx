@@ -27,15 +27,14 @@ function SingleBooking (){
     const PayNow=async()=>{
     try{
       const {data:keyData} = await axios.get('/api/get-key');
-      const {key} = keyData;
-         console.log(key); 
+      const {key} = keyData; 
 
       const {data:orderData} = await axios.post('/api/payment' , { 
          email:data.email,
          phone:data.phone,
          price:booking.price
         });
-      console.log(orderData); 
+      console.log("orderdata",orderData); 
 
       const {order} = orderData;
       const options = {
