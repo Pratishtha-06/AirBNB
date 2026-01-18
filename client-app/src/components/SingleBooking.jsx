@@ -47,7 +47,7 @@ function SingleBooking (){
         name: 'AirBNB',
         description: 'Test Transaction',
         order_id: createOrder.id,
-        callback_url: 'api/paymentVerification',
+        callback_url: 'https://airbnb-3o0c.onrender.com/api/paymentVerification',
         prefill: {
           name: detail.name,
           email: detail.email,

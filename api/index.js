@@ -330,7 +330,7 @@ app.post('/api/payment',async(req,res)=>{
      console.log("Incoming body:", req.body);
    try{ 
     console.log(" Payment Request Body:", req.body);
-   const {email,phone} = req.body;
+   const {email,phone,price} = req.body;
    const options = {
     amount : price * 100,
     currency : "INR",
