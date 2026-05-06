@@ -45,7 +45,7 @@ A full-stack Airbnb clone built using the MERN stack, allowing users to explore 
    
    ```
    npm install
-   cd client
+   cd client-app
    npm install
    ```
 
@@ -56,7 +56,7 @@ A full-stack Airbnb clone built using the MERN stack, allowing users to explore 
    npm start
 
    #Run frontend 
-   cd client 
+   cd client-app
    npm start
    ```
 
